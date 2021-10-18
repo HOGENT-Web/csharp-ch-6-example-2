@@ -1,4 +1,4 @@
-using Bogus;
+﻿using Bogus;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -31,6 +31,9 @@ namespace Project.Shared.Products
             }));
         }
 
+        public Task<ProductDto.Detail> GetDetailAsync(int productId)
+        {
+            return Task.FromResult(_products.Single(x => x.Id == productId));
         }
     }
 }
