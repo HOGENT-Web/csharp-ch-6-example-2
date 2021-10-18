@@ -1,6 +1,7 @@
 ﻿@page "/product"
 @using Project.Shared.Products
 @inject IProductService ProductService
+@attribute [Authorize]
 <h1>Products</h1>
 @if (products == null)
 {
