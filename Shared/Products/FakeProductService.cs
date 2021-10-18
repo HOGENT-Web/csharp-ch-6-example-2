@@ -23,7 +23,14 @@ namespace Project.Shared.Products
 
         public Task<IEnumerable<ProductDto.Index>> GetIndexAsync()
         {
-            return Task.FromResult(_products.AsEnumerable());
+            return Task.FromResult(_products.Select(x => new ProductDto.Index
+            {
+                Id = x.Id,
+                Name = x.Name,
+                Price = x.Price
+            }));
+        }
+
         }
     }
 }
