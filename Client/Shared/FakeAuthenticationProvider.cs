@@ -26,7 +26,7 @@ namespace Project.Client.Shared
 
         public override Task<AuthenticationState> GetAuthenticationStateAsync()
         {
-            return Task.FromResult(new AuthenticationState(Customer));
+            return Task.FromResult(new AuthenticationState(Administrator));
         }
     }
 }
