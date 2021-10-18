@@ -1,0 +1,29 @@
+﻿@page "/product/{id:int}"
+<PageTitle>Product - @product?.Name</PageTitle>
+@using Project.Shared.Products
+@inject IProductService ProductService
+
+
+@if (product == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <h3>@product.Name</h3>
+    <p>@nameof(product.Id):@product.Id</p>
+    <p>@nameof(product.Description):@product.Description</p>
+    <p>@nameof(product.Price):@product.Price.ToString("C")</p>
+    <img src="@product.Image" alt="Some product img" width="100"/>
+}
+
+@code {
+    private ProductDto.Detail? product;
+
+    [Parameter] public int Id { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        product = await ProductService.GetDetailAsync(Id);
+    }    
+}
