@@ -35,5 +35,12 @@ namespace Project.Shared.Products
         {
             return Task.FromResult(_products.Single(x => x.Id == productId));
         }
+
+        public Task DeleteAsync(int productId)
+        {
+            var p = _products.SingleOrDefault(x => x.Id == productId);
+            _products.Remove(p);
+            return Task.CompletedTask;
+        }
     }
 }
