@@ -1,9 +1,9 @@
 ﻿@page "/product/{id:int}"
 <PageTitle>Product - @product?.Name</PageTitle>
-@using Project.Shared.Products
 @inject IProductService ProductService
+@inject NavigationManager NavigationManager
 
-
+@using Project.Shared.Products
 @if (product == null)
 {
     <p><em>Loading...</em></p>
@@ -14,7 +14,10 @@ else
     <p>@nameof(product.Id):@product.Id</p>
     <p>@nameof(product.Description):@product.Description</p>
     <p>@nameof(product.Price):@product.Price.ToString("C")</p>
-    <img src="@product.Image" alt="Some product img" width="100"/>
+    <img src="@product.Image" alt="Some product img" width="100" />
+    <AuthorizeView Roles="Administrator">
+        <button class="btn btn-danger" @onclick="DeleteAsync">Delete</button>
+    </AuthorizeView>
 }
 
 @code {
@@ -25,5 +28,11 @@ else
     protected override async Task OnInitializedAsync()
     {
         product = await ProductService.GetDetailAsync(Id);
-    }    
+    }
+
+    private async Task DeleteAsync()
+    {
+        await ProductService.DeleteAsync(product!.Id);
+        NavigationManager.NavigateTo("/product");
+    }
 }
