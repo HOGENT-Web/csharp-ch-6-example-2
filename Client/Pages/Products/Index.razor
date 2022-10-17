@@ -22,7 +22,7 @@ else
             @foreach (var product in products)
             {
             <tr>
-              <td><a href="/product/@product.Id">@product.Name</a></td>
+              <td><a href="product/@product.Id">@product.Name</a></td>
               <td>@product.Price.ToString("C")</td>
             </tr>
             }

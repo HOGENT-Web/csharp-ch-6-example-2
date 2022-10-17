@@ -33,6 +33,6 @@ else
     private async Task DeleteAsync()
     {
         await ProductService.DeleteAsync(product!.Id);
-        NavigationManager.NavigateTo("/product");
+        NavigationManager.NavigateTo("product");
     }
 }
