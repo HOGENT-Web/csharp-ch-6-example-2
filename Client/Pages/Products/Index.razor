@@ -1,4 +1,37 @@
 ﻿@page "/product"
-<PageTitle>Products</PageTitle>
+@using Project.Shared.Products
+@inject IProductService ProductService
 
+<PageTitle>Products</PageTitle>
 <h1>Products</h1>
+@if (products == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var product in products)
+            {
+            <tr>
+              <td><a href="/product/@product.Id">@product.Name</a></td>
+              <td>@product.Price.ToString("C")</td>
+            </tr>
+            }
+        </tbody>
+    </table>
+}
+@code {
+    private IEnumerable<ProductDto.Index> products;
+    protected override async Task OnInitializedAsync()
+    {
+        products = await ProductService.GetIndexAsync();
+    }
+}
