@@ -9,7 +9,11 @@ namespace Project.Client.Shared;
 
 public class FakeAuthenticationProvider : AuthenticationStateProvider
 {
-    public static ClaimsPrincipal Anonymous => new(new ClaimsIdentity());
+    public static ClaimsPrincipal Anonymous => new(new ClaimsIdentity(new[]
+    {
+            new Claim(ClaimTypes.Name, "Anonymous"),
+    }));
+
     public static ClaimsPrincipal Administrator => new(new ClaimsIdentity(new[]
     {
         new Claim(ClaimTypes.NameIdentifier, "1"),
@@ -26,8 +30,16 @@ public class FakeAuthenticationProvider : AuthenticationStateProvider
         new Claim(ClaimTypes.Role, "Customer"),
     }, "Fake Authentication"));
 
+    public ClaimsPrincipal Current { get; private set; } = Anonymous;
+
     public override Task<AuthenticationState> GetAuthenticationStateAsync()
     {
-        return Task.FromResult(new AuthenticationState(Administrator));
+        return Task.FromResult(new AuthenticationState(Current));
+    }
+
+    public void ChangeAuthenticationState(ClaimsPrincipal claimsPrincipal)
+    {
+        Current = claimsPrincipal;
+        NotifyAuthenticationStateChanged(GetAuthenticationStateAsync());
     }
 }
