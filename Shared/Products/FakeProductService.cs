@@ -23,4 +23,9 @@ public class FakeProductService : IProductService
     {
         return Task.FromResult(_products.AsEnumerable());
     }
+
+    public Task<ProductDto.Detail> GetDetailAsync(int productId)
+    {
+        throw new NotImplementedException();
+    }
 }
